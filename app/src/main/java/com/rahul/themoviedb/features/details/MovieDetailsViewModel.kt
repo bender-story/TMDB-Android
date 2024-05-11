@@ -1,12 +1,19 @@
 package com.rahul.themoviedb.features.details
 
 import androidx.lifecycle.ViewModel
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.rahul.themoviedb.core.ui.UIState
-import com.rahul.themoviedb.features.list.GetPopularMoviesUseCase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class MovieDetailsViewModel() : ViewModel() {
-
+class MovieDetailsViewModel(private val getMovieDetailsUseCase: GetMovieDetailsUseCase) : ViewModel() {
+    private val _uiState = MutableStateFlow<UIState>(UIState.LoadingState)
+    val uiState: StateFlow<UIState> = _uiState.asStateFlow()
+    fun getMovieDetails(movieId: Int, language: String) {
+        viewModelScope.launch {
+            _uiState.value =  getMovieDetailsUseCase.execute(GetMovieDetailsUseCase.Params(movieId, language))
+        }
+    }
 }

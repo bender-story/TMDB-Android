@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">The Movie DB</string>
     <string name="movie_list_header">Popular Movies List</string>
+    <string name="movie_details_header">Movie Details</string>
+    <string name="movie_details_runtime">Runtime:</string>
+    <string name="movie_details_release_date">Release Date:</string>
 </resources>

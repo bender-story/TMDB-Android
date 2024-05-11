@@ -6,6 +6,9 @@ import com.rahul.themoviedb.features.list.MoviesListViewModel
 import com.rahul.themoviedb.core.network.RetrofitProvider
 import com.rahul.themoviedb.core.network.ServiceInterface
 import com.rahul.themoviedb.core.usecase.UseCase
+import com.rahul.themoviedb.features.details.GetMovieDetailsUseCase
+import com.rahul.themoviedb.features.details.repo.MovieDetailsRepository
+import com.rahul.themoviedb.features.details.repo.MovieDetailsRepositoryImpl
 import com.rahul.themoviedb.features.list.GetPopularMoviesUseCase
 import com.rahul.themoviedb.features.list.repo.MovieRepository
 import com.rahul.themoviedb.features.list.repo.MovieRepositoryImpl
@@ -17,6 +20,8 @@ val appModule = module {
     single<ServiceInterface> { get<RetrofitProvider>().retrofit.create(ServiceInterface::class.java) }
     single<MovieRepository> { MovieRepositoryImpl(get()) }
     single { GetPopularMoviesUseCase(get()) }
+    single<MovieDetailsRepository> { MovieDetailsRepositoryImpl(get()) }
+    single { GetMovieDetailsUseCase(get()) }
     viewModel { MoviesListViewModel(get()) }
-    viewModel { MovieDetailsViewModel() }
+    viewModel { MovieDetailsViewModel(get()) }
 }

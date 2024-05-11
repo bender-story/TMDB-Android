@@ -1,6 +1,6 @@
 package com.rahul.themoviedb.core.network
 
-import com.rahul.themoviedb.data.MovieDetails
+import com.rahul.themoviedb.data.MovieDetailsData
 import com.rahul.themoviedb.data.PopularMovies
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -17,5 +17,5 @@ interface ServiceInterface {
     suspend fun getMovieDetails(
         @Path("movie_id") movieId: Int,
         @Query("language") language: String
-    ): MovieDetails
+    ): MovieDetailsData
 }
