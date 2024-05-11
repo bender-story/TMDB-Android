@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.rahul.themoviedb.R
 
 @Composable
 fun GradientAsyncImage(imagePath: String, title: String) {
@@ -25,10 +26,11 @@ fun GradientAsyncImage(imagePath: String, title: String) {
             model = ImageRequest.Builder(LocalContext.current)
                 .data(imagePath)
                 .crossfade(true)
+                .placeholder(R.drawable.icon_movie)
                 .build(),
             contentDescription = title,
             contentScale = ContentScale.FillBounds,
-            modifier = Modifier.matchParentSize()
+            modifier = Modifier.matchParentSize(),
         )
         Box(
             modifier = Modifier
