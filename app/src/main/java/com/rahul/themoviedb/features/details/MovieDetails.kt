@@ -1,4 +1,4 @@
-package com.rahul.themoviedb.feature.details
+package com.rahul.themoviedb.features.details
 
 import androidx.compose.runtime.Composable
 

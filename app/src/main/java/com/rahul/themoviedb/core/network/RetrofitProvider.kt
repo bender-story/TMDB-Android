@@ -1,4 +1,4 @@
-package com.rahul.themoviedb.network
+package com.rahul.themoviedb.core.network
 
 import com.rahul.themoviedb.Constants
 import okhttp3.Interceptor
@@ -12,6 +12,7 @@ import java.net.CookiePolicy
 import java.util.concurrent.TimeUnit
 
 class RetrofitProvider(private val url: String) {
+
     val retrofit: Retrofit by lazy {
         val interceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY

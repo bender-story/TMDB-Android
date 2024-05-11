@@ -1,4 +1,4 @@
-package com.rahul.themoviedb.network
+package com.rahul.themoviedb.core.network
 
 import com.rahul.themoviedb.data.MovieDetails
 import com.rahul.themoviedb.data.PopularMovies
