@@ -47,17 +47,6 @@ fun PopularMoviesList(movies: List<Movie>, listState: LazyListState, navControll
                 print("imagePath: $imagePath")
                 Column(modifier = Modifier.padding(8.dp)) {
                     GradientAsyncImage(imagePath = imagePath, title = movie.title)
-//                    AsyncImage(
-//                        model = ImageRequest.Builder(LocalContext.current)
-//                            .data(imagePath)
-//                            .crossfade(true)
-//                            .build(),
-//                        contentDescription = movie.title,
-//                        contentScale = ContentScale.FillBounds,
-//                        modifier = Modifier
-//                            .fillMaxSize()
-//                            .border(2.dp, Color.Black)
-//                    )
                     Spacer(modifier = Modifier.height(8.dp))
                     Column(modifier = Modifier.padding(start = 8.dp)) {
                         Text(

@@ -9,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,22 +33,18 @@ import org.koin.androidx.compose.getViewModel
 fun MoviesList(navController: NavController) {
     val viewModel: MoviesListViewModel = getViewModel()
     val uiState by viewModel.uiState.collectAsState()
-
     val showDialog = remember { mutableStateOf(false) }
     val errorMessage = remember { mutableStateOf("") }
-    val loadData = remember { mutableStateOf(true) }
 
     val listState = rememberLazyListState()
-    LaunchedEffect(loadData) {
-        if (loadData.value) {
-            viewModel.getPopularMovies("en", 1)
-        }
-    }
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = stringResource(id = R.string.movie_list_header), fontWeight = FontWeight.Bold)
+                    Text(
+                        text = stringResource(id = R.string.movie_list_header),
+                        fontWeight = FontWeight.Bold
+                    )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = OrangeDark,
@@ -67,24 +62,21 @@ fun MoviesList(navController: NavController) {
                 is UIState.SuccessState<*> -> {
                     val successState = uiState as UIState.SuccessState<PopularMovies>
                     PopularMoviesList(successState.data.results, listState, navController)
-                    loadData.value = false
                 }
 
                 is UIState.ErrorState -> {
                     errorMessage.value = (uiState as UIState.ErrorState).errorMessage
                     showDialog.value = true
-                    loadData.value = false
                 }
             }
 
             ShowErrorDialog(showDialog, errorMessage) {
-                loadData.value = true
+                viewModel.getPopularMovies("en", 1)
                 showDialog.value = false
             }
         }
     }
 }
-
 
 
 @Preview(showBackground = true)

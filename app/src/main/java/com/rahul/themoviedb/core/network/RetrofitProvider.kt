@@ -1,5 +1,6 @@
 package com.rahul.themoviedb.core.network
 
+import android.content.Context
 import com.rahul.themoviedb.Constants
 import okhttp3.Interceptor
 import okhttp3.JavaNetCookieJar
@@ -11,7 +12,7 @@ import java.net.CookieManager
 import java.net.CookiePolicy
 import java.util.concurrent.TimeUnit
 
-class RetrofitProvider(private val url: String) {
+class RetrofitProvider(private val url: String,private val context: Context) {
 
     val retrofit: Retrofit by lazy {
         val interceptor = HttpLoggingInterceptor().apply {
@@ -34,6 +35,7 @@ class RetrofitProvider(private val url: String) {
             .cookieJar(JavaNetCookieJar(cookieManager))
             .addNetworkInterceptor(interceptor)
             .addInterceptor(headerInterceptor)
+            .addInterceptor(NetworkConnectionInterceptor(context))
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)

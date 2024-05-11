@@ -40,12 +40,9 @@ fun MovieDetails(movieId: Int, navController: NavController) {
 
     val showDialog = remember { mutableStateOf(false) }
     val errorMessage = remember { mutableStateOf("") }
-    val loadData = remember { mutableStateOf(true) }
 
-    LaunchedEffect(loadData) {
-        if (loadData.value) {
-            viewModel.getMovieDetails(movieId, "en")
-        }
+    LaunchedEffect(true) {
+        viewModel.getMovieDetails(movieId, "en")
     }
     Scaffold(
         topBar = {
@@ -58,7 +55,11 @@ fun MovieDetails(movieId: Int, navController: NavController) {
                 },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
+                        Icon(
+                            Icons.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.White
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -77,18 +78,16 @@ fun MovieDetails(movieId: Int, navController: NavController) {
                 is UIState.SuccessState<*> -> {
                     val successState = uiState as UIState.SuccessState<MovieDetailsData>
                     MovieDetailsView(successState.data)
-                    loadData.value = false
                 }
 
                 is UIState.ErrorState -> {
                     errorMessage.value = (uiState as UIState.ErrorState).errorMessage
                     showDialog.value = true
-                    loadData.value = false
                 }
             }
 
             ShowErrorDialog(showDialog, errorMessage) {
-                loadData.value = true
+                viewModel.getMovieDetails(movieId, "en")
                 showDialog.value = false
             }
         }

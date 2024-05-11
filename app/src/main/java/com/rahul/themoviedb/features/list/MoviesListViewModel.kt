@@ -13,7 +13,12 @@ class MoviesListViewModel(private val getPopularMoviesUseCase: GetPopularMoviesU
     private val _uiState = MutableStateFlow<UIState>(UIState.LoadingState)
     val uiState: StateFlow<UIState> = _uiState.asStateFlow()
 
+    init {
+        getPopularMovies("en", 1)
+    }
+
     fun getPopularMovies(language: String, page: Int) {
+        _uiState.value = UIState.LoadingState
         viewModelScope.launch {
             _uiState.value = getPopularMoviesUseCase.execute(GetPopularMoviesUseCase.Params(language, page))
         }
