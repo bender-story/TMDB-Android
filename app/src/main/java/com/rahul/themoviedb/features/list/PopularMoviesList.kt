@@ -66,7 +66,7 @@ fun PopularMoviesList(movies: List<Movie>, listState: LazyListState, navControll
                             fontWeight = FontWeight.Bold
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-                        RatingBar(rating = (movie.voteAverage / 2).toInt(), votes = movie.voteCount)
+                        RatingBar(rating = movie.voteAverage, votes = movie.voteCount)
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                 }

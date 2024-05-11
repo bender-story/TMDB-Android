@@ -5,3 +5,7 @@ fun Int.convertMinutesToHoursAndMinutes(): String {
     val remainingMinutes = this % 60
     return "${hours}h ${remainingMinutes}m"
 }
+
+fun Double.formatToOneDecimalPlaces(): String {
+    return String.format("%.1f", this)
+}

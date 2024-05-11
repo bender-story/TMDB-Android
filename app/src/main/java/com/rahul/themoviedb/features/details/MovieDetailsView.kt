@@ -1,21 +1,30 @@
 package com.rahul.themoviedb.features.details
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.rahul.themoviedb.Constants
 import com.rahul.themoviedb.R
 import com.rahul.themoviedb.common.ui.CustomRowView
@@ -37,11 +46,26 @@ fun MovieDetailsView(movieDetails: MovieDetailsData) {
         val imagePath = Constants.IMAGE_BASE_URL + movieDetails.backdropPath
         GradientAsyncImage(imagePath, movieDetails.title)
         Column(modifier = Modifier.padding(16.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(Constants.IMAGE_BASE_URL + movieDetails.posterPath)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = movieDetails.title,
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier
+                        .size(50.dp)
+                        .border(2.dp, Color.Black)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = movieDetails.title, fontWeight = FontWeight.Bold)
+            }
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = movieDetails.title, fontWeight = FontWeight.Bold)
-            Spacer(modifier = Modifier.height(8.dp))
-            RatingBar(rating = (movieDetails.voteAverage / 2).toInt(), votes = movieDetails.voteCount)
-            Spacer(modifier = Modifier.height(8.dp))
+            RatingBar(rating = movieDetails.voteAverage, votes = movieDetails.voteCount)
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(text = stringResource(id = R.string.movie_details_story_line), fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(4.dp))
             Text(text = movieDetails.overview, fontStyle = FontStyle.Italic, color = Color.Gray, fontSize = 14.sp)
             Spacer(modifier = Modifier.height(8.dp))
             CustomRowView(stringResource(id = R.string.movie_details_runtime),movieDetails.runtime.convertMinutesToHoursAndMinutes())
