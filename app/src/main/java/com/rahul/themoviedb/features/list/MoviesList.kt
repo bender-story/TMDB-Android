@@ -70,10 +70,11 @@ fun MoviesList(navController: NavController) {
                 }
             }
 
-            ShowErrorDialog(showDialog, errorMessage) {
+            ShowErrorDialog(showDialog, errorMessage,onRetry = {
                 viewModel.getPopularMovies("en", 1)
-                showDialog.value = false
-            }
+            }, onDismiss = {
+                navController.popBackStack()
+            })
         }
     }
 }

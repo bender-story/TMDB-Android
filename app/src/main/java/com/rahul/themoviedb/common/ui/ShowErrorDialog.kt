@@ -10,7 +10,8 @@ import androidx.compose.runtime.MutableState
 fun ShowErrorDialog(
     showDialog: MutableState<Boolean>,
     errorMessage: MutableState<String>,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     if (showDialog.value) {
         AlertDialog(
@@ -18,8 +19,19 @@ fun ShowErrorDialog(
             title = { Text(text = "Error") },
             text = { Text(text = errorMessage.value) },
             confirmButton = {
-                TextButton(onClick = onRetry) {
+                TextButton(onClick = {
+                    showDialog.value = false
+                    onRetry.invoke()
+                }) {
                     Text("Retry")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    showDialog.value = false
+                    onDismiss.invoke()
+                }) {
+                    Text("Dismiss")
                 }
             }
         )

@@ -86,10 +86,11 @@ fun MovieDetails(movieId: Int, navController: NavController) {
                 }
             }
 
-            ShowErrorDialog(showDialog, errorMessage) {
+            ShowErrorDialog(showDialog, errorMessage,onRetry = {
                 viewModel.getMovieDetails(movieId, "en")
-                showDialog.value = false
-            }
+            }, onDismiss = {
+                navController.popBackStack()
+            })
         }
     }
 }
