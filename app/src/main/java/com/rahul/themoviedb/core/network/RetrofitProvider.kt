@@ -21,7 +21,7 @@ class RetrofitProvider(private val url: String,private val context: Context) {
 
         val headerInterceptor = Interceptor { chain ->
             val request = chain.request().newBuilder()
-                .addHeader("Authorization", "Bearer ${Constants.API_KEY}")
+                .addHeader("Authorization", "Bearer ${Constants.getApiKey()}")
                 .addHeader("accept", "application/json")
                 .build()
             chain.proceed(request)
